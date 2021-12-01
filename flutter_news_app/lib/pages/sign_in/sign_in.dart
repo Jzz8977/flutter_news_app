@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_news_app/common/utils/screen.dart';
 import 'package:flutter_news_app/common/values/values.dart';
+import 'package:flutter_news_app/common/widgets/widgets.dart';
 
 class SignInPage extends StatefulWidget {
   SignInPage({Key? key}) : super(key: key);
@@ -10,6 +11,9 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
   // logo
   Widget _buildLogo() {
     return Container(
@@ -85,7 +89,58 @@ class _SignInPageState extends State<SignInPage> {
 
   // 登录表单
   Widget _buildInputForm() {
-    return Container();
+    return Container(
+      width: duSetWidth(295),
+      margin: EdgeInsets.only(top: duSetHeight(49)),
+      child: Column(
+        children: [
+          inputTextEdit(
+            controller: _emailController,
+            keyboardType: TextInputType.emailAddress,
+            hintText: 'Email',
+            marginTop: 0,
+          ),
+          inputTextEdit(
+            controller: _passwordController,
+            keyboardType: TextInputType.visiblePassword,
+            hintText: 'Password',
+            marginTop: 15,
+            isPassword: true,
+          ),
+          Container(
+            height: duSetHeight(44),
+            margin: EdgeInsets.only(top: duSetHeight(15)),
+            child: Row(
+              children: [
+                btnFlatButtonWidget(
+                  onPressed: () {},
+                  gbColor: AppColors.thirdElement,
+                  title: "Sign up",
+                ),
+                Spacer(),
+                btnFlatButtonWidget(
+                  onPressed: () {},
+                  gbColor: AppColors.primaryElement,
+                  title: "Sign in",
+                ),
+              ],
+            ),
+          ),
+          FlatButton(
+            onPressed: () {},
+            child: Text(
+              'Forgot password?',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  color: AppColors.secondaryElementText,
+                  fontFamily: Font.primaryElementText,
+                  fontSize: duSetFontSize(16),
+                  fontWeight: FontWeight.w400),
+            ),
+          )
+        ],
+      ),
+    );
   }
 
   // 第三方登录
