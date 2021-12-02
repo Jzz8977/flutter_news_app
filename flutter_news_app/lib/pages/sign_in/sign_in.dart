@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_news_app/common/utils/screen.dart';
+import 'package:flutter_news_app/common/utils/utils.dart';
 import 'package:flutter_news_app/common/values/values.dart';
 import 'package:flutter_news_app/common/widgets/widgets.dart';
 
@@ -13,6 +14,26 @@ class SignInPage extends StatefulWidget {
 class _SignInPageState extends State<SignInPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+
+  // 执行登录操作
+  _handleSignIn() {
+    if (!duIsEmail(_emailController.value.text)) {
+      toastInfo(msg: '请正确输入邮件');
+      return;
+    }
+    if (!duCheckStringLength(_passwordController.value.text, 6)) {
+      toastInfo(msg: '请正确输入密码');
+      return;
+    }
+  }
+
+  // 执行登录操作
+  _handleNavSignUp() {
+    Navigator.pushNamed(
+      context,
+      '/sign-up',
+    );
+  }
 
   // logo
   Widget _buildLogo() {
@@ -119,7 +140,7 @@ class _SignInPageState extends State<SignInPage> {
                 ),
                 Spacer(),
                 btnFlatButtonWidget(
-                  onPressed: () {},
+                  onPressed: _handleSignIn,
                   gbColor: AppColors.primaryElement,
                   title: "Sign in",
                 ),
@@ -145,12 +166,63 @@ class _SignInPageState extends State<SignInPage> {
 
   // 第三方登录
   Widget _buildThirdPartyLogin() {
-    return Container();
+    return Container(
+      width: duSetWidth(295),
+      margin: EdgeInsets.only(bottom: duSetHeight(40)),
+      child: Column(
+        children: [
+          Text(
+            'Or sign in with social networks',
+            style: TextStyle(
+              fontWeight: FontWeight.w400,
+              fontFamily: Font.primaryElementText,
+              color: AppColors.primaryText,
+              fontSize: duSetFontSize(14),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: duSetHeight(20)),
+            child: Row(
+              children: [
+                btnFlatButtonBorderOnlyWidget(
+                  onPressed: () {},
+                  width: 88,
+                  iconFileName: "twitter",
+                ),
+                Spacer(),
+                btnFlatButtonBorderOnlyWidget(
+                  onPressed: () {},
+                  width: 88,
+                  iconFileName: "google",
+                ),
+                Spacer(),
+                btnFlatButtonBorderOnlyWidget(
+                  onPressed: () {},
+                  width: 88,
+                  iconFileName: "facebook",
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
+    );
   }
 
   // 注册按钮
   Widget _buildSignUpButton() {
-    return Container();
+    return Container(
+      margin: EdgeInsets.only(bottom: duSetHeight(20)),
+      child: btnFlatButtonWidget(
+        onPressed: _handleNavSignUp,
+        width: 294,
+        gbColor: AppColors.secondaryElement,
+        fontColor: AppColors.primaryText,
+        title: 'Sign up',
+        fontWeight: FontWeight.w500,
+        fontSize: 16,
+      ),
+    );
   }
 
   @override

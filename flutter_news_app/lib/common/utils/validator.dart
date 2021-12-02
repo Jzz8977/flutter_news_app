@@ -2,7 +2,8 @@
 bool duIsEmail(String? input) {
   if (input == null || input.isEmpty) return false;
   // 邮箱正则
-  String regexEmail = "^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*\$";
+  String regexEmail =
+      "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}\$";
   return RegExp(regexEmail).hasMatch(input);
 }
 

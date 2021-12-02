@@ -14,7 +14,7 @@ Widget btnFlatButtonWidget({
   FontWeight fontWeight = FontWeight.w400,
 }) {
   final ButtonStyle flatButtonStyle = TextButton.styleFrom(
-    primary: gbColor,
+    primary: fontColor,
     minimumSize: Size(88, 44),
     padding: EdgeInsets.symmetric(horizontal: 16.0),
     // shape: const RoundedRectangleBorder(
@@ -40,5 +40,33 @@ Widget btnFlatButtonWidget({
       ),
       style: flatButtonStyle,
     ),
+  );
+}
+
+Widget btnFlatButtonBorderOnlyWidget({
+  required VoidCallback onPressed,
+  double width = 99,
+  double height = 44,
+  String? iconFileName,
+}) {
+  return Container(
+    width: duSetWidth(width),
+    height: duSetHeight(height),
+    child: TextButton(
+      onPressed: onPressed,
+      style: TextButton.styleFrom(
+        shape: const RoundedRectangleBorder(
+          side: Borders.primaryBorder,
+          borderRadius: Radii.k6pxRadius,
+        ),
+      ),
+      child: Image.asset('assets/images/icons-$iconFileName.png'),
+    ),
+    // child: TextButton.icon(
+    //   style: TextButton.styleFrom(),
+    //   icon: Icon(Icons['${iconFileName}']),
+    //   onPressed: onPressed,
+    //   label: Text(label),
+    // ),
   );
 }

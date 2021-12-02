@@ -11,7 +11,7 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Text('dataUp'),
+      child: const Text('dataUp'),
     );
   }
 }
