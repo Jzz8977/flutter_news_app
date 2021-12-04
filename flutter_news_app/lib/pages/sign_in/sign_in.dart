@@ -177,7 +177,7 @@ class _SignInPageState extends State<SignInPage> {
               fontWeight: FontWeight.w400,
               fontFamily: Font.primaryElementText,
               color: AppColors.primaryText,
-              fontSize: duSetFontSize(14),
+               fontSize: duSetFontSize(14),
             ),
           ),
           Padding(
