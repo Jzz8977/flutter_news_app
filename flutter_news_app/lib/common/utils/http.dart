@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ffi';
 import 'package:dio/dio.dart';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
@@ -15,7 +16,7 @@ import 'package:flutter_news_app/common/values/values.dart';
   * https://github.com/flutterchina/dio/blob/master/migration_to_3.0.md
 */
 class HttpUtil {
-  static HttpUtil _instance = HttpUtil._internal();
+  static final HttpUtil _instance = HttpUtil._internal();
   factory HttpUtil() => _instance;
 
   Dio? dio;
@@ -61,18 +62,20 @@ class HttpUtil {
 
     // 添加拦截器
     dio.interceptors
-        .add(InterceptorsWrapper(onRequest: (RequestOptions options) {
+        .add(InterceptorsWrapper(onRequest: (RequestOptions options, handler) {
       // print("请求之前");
       // Loading.before(options.uri, '正在通讯...');
-      return options; //continue
-    }, onResponse: (Response response) {
+      // ignore: void_checks
+
+      return handler.next(options); //continu
+    }, onResponse: (Response response, handler) {
       // print("响应之前");
       // Loading.complete(response.request.uri);
-      return response; // continue
-    }, onError: (DioError e) {
+      return handler.next(response); // continue
+    }, onError: (DioError e, handler) {
       // print("错误之前");
       // Loading.complete(e.request.uri);
-      return e; //continue
+      return handler.next(e); //continue
     }));
   }
 
@@ -183,7 +186,7 @@ class HttpUtil {
 
   /// 读取本地配置
   Options getLocalOptions() {
-    Options options;
+    Options options = Options();
     String token = StorageUtil().getItem(STORAGE_USER_TOKEN_KEY);
     if (token != null) {
       options = Options(headers: {
@@ -195,10 +198,10 @@ class HttpUtil {
 
   /// restful get 操作
   Future get(String path,
-      {dynamic params, Options options, CancelToken? cancelToken}) async {
+      {dynamic params, Options? options, CancelToken? cancelToken}) async {
     try {
       var tokenOptions = options ?? getLocalOptions();
-      var response = await dio.get(path,
+      var response = await dio!.get(path,
           queryParameters: params,
           options: tokenOptions,
           cancelToken: cancelToken);
@@ -210,10 +213,10 @@ class HttpUtil {
 
   /// restful post 操作
   Future post(String path,
-      {dynamic params, Options options, CancelToken cancelToken}) async {
+      {dynamic params, Options? options, CancelToken? cancelToken}) async {
     try {
       var tokenOptions = options ?? getLocalOptions();
-      var response = await dio.post(path,
+      var response = await dio!.post(path,
           data: params, options: tokenOptions, cancelToken: cancelToken);
       return response.data;
     } on DioError catch (e) {
@@ -223,10 +226,10 @@ class HttpUtil {
 
   /// restful put 操作
   Future put(String path,
-      {dynamic params, Options options, CancelToken cancelToken}) async {
+      {dynamic params, Options? options, CancelToken? cancelToken}) async {
     try {
       var tokenOptions = options ?? getLocalOptions();
-      var response = await dio.put(path,
+      var response = await dio!.put(path,
           data: params, options: tokenOptions, cancelToken: cancelToken);
       return response.data;
     } on DioError catch (e) {
@@ -236,10 +239,10 @@ class HttpUtil {
 
   /// restful delete 操作
   Future delete(String path,
-      {dynamic params, Options options, CancelToken cancelToken}) async {
+      {dynamic params, Options? options, CancelToken? cancelToken}) async {
     try {
       var tokenOptions = options ?? getLocalOptions();
-      var response = await dio.delete(path,
+      var response = await dio!.delete(path,
           data: params, options: tokenOptions, cancelToken: cancelToken);
       return response.data;
     } on DioError catch (e) {
