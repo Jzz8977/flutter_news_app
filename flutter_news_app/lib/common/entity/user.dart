@@ -6,8 +6,8 @@ class UserRequestEntity {
   final String password;
 
   UserRequestEntity({
-    @required this.email,
-    @required this.password,
+    required this.email,
+    required this.password,
   });
 
   factory UserRequestEntity.fromJson(Map<String, dynamic> json) =>

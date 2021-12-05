@@ -53,14 +53,14 @@ class HttpUtil {
       responseType: ResponseType.json,
     );
 
-    dio = Dio(options);
+    final Dio dio = Dio(options);
 
     // Cookie管理
     CookieJar cookieJar = CookieJar();
-    dio!.interceptors.add(CookieManager(cookieJar));
+    dio.interceptors.add(CookieManager(cookieJar));
 
     // 添加拦截器
-    dio!.interceptors
+    dio.interceptors
         .add(InterceptorsWrapper(onRequest: (RequestOptions options) {
       // print("请求之前");
       // Loading.before(options.uri, '正在通讯...');
@@ -80,39 +80,37 @@ class HttpUtil {
    * error统一处理
    */
   // 错误信息
-  ErrorEntity createErrorEntity(DioError error) {
-    switch (error.type) {
-      case DioErrorType.CANCEL:
+  ErrorEntity createErrorEntity(DioError dioError) {
+    switch (dioError.type) {
+      case DioErrorType.cancel:
         {
           return ErrorEntity(code: -1, message: "请求取消");
         }
         break;
-      case DioErrorType.CONNECT_TIMEOUT:
+      case DioErrorType.connectTimeout:
         {
           return ErrorEntity(code: -1, message: "连接超时");
         }
         break;
-      case DioErrorType.SEND_TIMEOUT:
+      case DioErrorType.sendTimeout:
         {
           return ErrorEntity(code: -1, message: "请求超时");
         }
         break;
-      case DioErrorType.RECEIVE_TIMEOUT:
+      case DioErrorType.receiveTimeout:
         {
           return ErrorEntity(code: -1, message: "响应超时");
         }
         break;
-      case DioErrorType.RESPONSE:
+      case DioErrorType.response:
         {
           try {
-            int errCode = error.response.statusCode;
+            int? errCode = dioError.response!.statusCode;
             // String errMsg = error.response.statusMessage;
             // return ErrorEntity(code: errCode, message: errMsg);
             switch (errCode) {
               case 400:
-                {
-                  return ErrorEntity(code: errCode, message: "请求语法错误");
-                }
+                return ErrorEntity(code: errCode, message: "请求语法错误");
                 break;
               case 401:
                 {
@@ -168,7 +166,7 @@ class HttpUtil {
         break;
       default:
         {
-          return ErrorEntity(code: -1, message: error.message);
+          return ErrorEntity(code: -1, message: dioError.message);
         }
     }
   }
@@ -197,7 +195,7 @@ class HttpUtil {
 
   /// restful get 操作
   Future get(String path,
-      {dynamic params, Options options, CancelToken cancelToken}) async {
+      {dynamic params, Options options, CancelToken? cancelToken}) async {
     try {
       var tokenOptions = options ?? getLocalOptions();
       var response = await dio.get(path,
@@ -251,10 +249,10 @@ class HttpUtil {
 
   /// restful post form 表单提交操作
   Future postForm(String path,
-      {dynamic params, Options options, CancelToken cancelToken}) async {
+      {dynamic params, Options? options, CancelToken? cancelToken}) async {
     try {
       var tokenOptions = options ?? getLocalOptions();
-      var response = await dio.post(path,
+      var response = await dio!.post(path,
           data: FormData.fromMap(params),
           options: tokenOptions,
           cancelToken: cancelToken);
