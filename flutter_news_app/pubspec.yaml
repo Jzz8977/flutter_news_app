@@ -49,6 +49,9 @@ dependencies:
   #localStorage
   localstorage: ^3.0.6
 
+  # 加密
+  crypto: ^3.0.1
+
   
 dev_dependencies:
   flutter_test:

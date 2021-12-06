@@ -1,8 +1,8 @@
 import 'dart:async';
-import 'dart:ffi';
 import 'package:dio/dio.dart';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
+import 'package:flutter_news_app/common/entity/user.dart';
 import 'package:flutter_news_app/common/utils/utils.dart';
 import 'package:flutter_news_app/common/values/values.dart';
 
@@ -212,7 +212,7 @@ class HttpUtil {
   }
 
   /// restful post 操作
-  Future post(String path,
+  Future post(String path, UserResponseEntity params,
       {dynamic params, Options? options, CancelToken? cancelToken}) async {
     try {
       var tokenOptions = options ?? getLocalOptions();

@@ -25,11 +25,11 @@ class UserRequestEntity {
 // 登录返回
 class UserResponseEntity {
   String accessToken;
-  String displayName;
-  List<String> channels;
+  String? displayName;
+  List<String>? channels;
 
   UserResponseEntity({
-    @required this.accessToken,
+    required this.accessToken,
     this.displayName,
     this.channels,
   });

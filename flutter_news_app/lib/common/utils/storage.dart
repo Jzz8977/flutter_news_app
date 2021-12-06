@@ -1,13 +1,10 @@
 import 'package:flutter_news_app/common/values/values.dart';
 import 'package:localstorage/localstorage.dart';
 
-const String STORAGE_MASTER_KEY = 'ducafcat_news_app';
-const String STORAGE_USER_TOKEN_KEY = 'user_token';
-
 /// 本地存储
 /// 单例 StorageUtil().getItem('key')
 class StorageUtil {
-  static final StorageUtil _singleton = new StorageUtil._internal();
+  static final StorageUtil _singleton = StorageUtil._internal();
   LocalStorage? _storage;
 
   factory StorageUtil() {
@@ -15,7 +12,7 @@ class StorageUtil {
   }
 
   StorageUtil._internal() {
-    _storage = new LocalStorage(STORAGE_MASTER_KEY);
+    _storage = LocalStorage(STORAGE_MASTER_KEY);
   }
 
   String getItem(String key) {
