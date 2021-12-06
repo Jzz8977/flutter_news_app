@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_news_app/common/utils/utils.dart';
 import 'package:fluttertoast/fluttertoast.dart';

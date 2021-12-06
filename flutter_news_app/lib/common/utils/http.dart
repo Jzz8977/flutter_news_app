@@ -159,7 +159,7 @@ class HttpUtil {
                 {
                   // return ErrorEntity(code: errCode, message: "未知错误");
                   return ErrorEntity(
-                      code: errCode, message: error.response.statusMessage);
+                      code: errCode, message: dioError.response!.statusMessage);
                 }
             }
           } on Exception catch (_) {
@@ -198,7 +198,7 @@ class HttpUtil {
 
   /// restful get 操作
   Future get(String path,
-      {dynamic params, Options? options, CancelToken? cancelToken}) async {
+      {dynamic? params, Options? options, CancelToken? cancelToken}) async {
     try {
       var tokenOptions = options ?? getLocalOptions();
       var response = await dio!.get(path,
@@ -213,7 +213,7 @@ class HttpUtil {
 
   /// restful post 操作
   Future post(String path, UserResponseEntity params,
-      {dynamic params, Options? options, CancelToken? cancelToken}) async {
+      {dynamic? params, Options? options, CancelToken? cancelToken}) async {
     try {
       var tokenOptions = options ?? getLocalOptions();
       var response = await dio!.post(path,
@@ -226,7 +226,7 @@ class HttpUtil {
 
   /// restful put 操作
   Future put(String path,
-      {dynamic params, Options? options, CancelToken? cancelToken}) async {
+      {dynamic? params, Options? options, CancelToken? cancelToken}) async {
     try {
       var tokenOptions = options ?? getLocalOptions();
       var response = await dio!.put(path,
@@ -239,7 +239,7 @@ class HttpUtil {
 
   /// restful delete 操作
   Future delete(String path,
-      {dynamic params, Options? options, CancelToken? cancelToken}) async {
+      {dynamic? params, Options? options, CancelToken? cancelToken}) async {
     try {
       var tokenOptions = options ?? getLocalOptions();
       var response = await dio!.delete(path,
@@ -252,7 +252,7 @@ class HttpUtil {
 
   /// restful post form 表单提交操作
   Future postForm(String path,
-      {dynamic params, Options? options, CancelToken? cancelToken}) async {
+      {dynamic? params, Options? options, CancelToken? cancelToken}) async {
     try {
       var tokenOptions = options ?? getLocalOptions();
       var response = await dio!.post(path,

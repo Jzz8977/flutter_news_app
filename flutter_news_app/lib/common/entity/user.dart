@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'dart:core';
 
 // 登录请求
 class UserRequestEntity {

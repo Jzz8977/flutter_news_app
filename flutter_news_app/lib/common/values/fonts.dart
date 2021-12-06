@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 class Font {
   //
   static const String primaryText = 'Montserrat';
